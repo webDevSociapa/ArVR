@@ -66,7 +66,7 @@ const QRScanner = () => {
         />
       ) : (
         <iframe
-          src={videoURL}
+          src="https://www.youtube.com/embed/M2khW5YZdH8?si=RsqavLx3cOWynk9x"
           title="QR Video"
           style={{
             position: "absolute",
