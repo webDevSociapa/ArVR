@@ -2,11 +2,13 @@ import React, { useRef, useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import jsQR from "jsqr";
 
+
 const QRScanner = () => {
   const [videoURL, setVideoURL] = useState(""); // Video URL from QR code
   const [isFrontCamera, setIsFrontCamera] = useState(true); // State to toggle between front and back camera
   const [qrPosition, setQrPosition] = useState(null); // Store QR position
   const webcamRef = useRef(null);
+  const [qrDetected, setQrDetected] = useState(false); // Track if QR code is detected
 
   // Function to handle QR Code scanning
   const handleQRScan = () => {
@@ -29,8 +31,9 @@ const QRScanner = () => {
 
         if (code) {
           console.log("QR Code Data:", code.data);
+          setQrDetected(true);
           setVideoURL("https://apisindia.s3.ap-south-1.amazonaws.com/homeBanner/f70925c7-972d-4c27-83bf-d82477e3202e_Jam+1440-698.mp4"); // Set video URL from QR code scanning
-          
+
           // Update QR position to overlay video at that location
           setQrPosition({
             top: code.location.topLeft.y / canvas.height * 100,
@@ -60,7 +63,7 @@ const QRScanner = () => {
         width: "100%",
         height:"100vh",
         objectFit: "cover",
-        backgroundImage: "url('./new1.jpeg')",
+        backgroundImage: qrDetected ? "url('./new1.jpeg')" : "none",
         backgroundSize: "cover",
       }}
     >
@@ -69,7 +72,6 @@ const QRScanner = () => {
         <>
           <Webcam
             ref={webcamRef}
-            screenshotFormat
             videoConstraints={{
               facingMode: isFrontCamera ? "user" : "environment", // Switch between front and back cameras
             }}
