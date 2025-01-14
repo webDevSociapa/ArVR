@@ -1,100 +1,86 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import jsQR from "jsqr";
 
-const QRScannerWithVideo = () => {
+const QRScanner = () => {
+  const [videoURL, setVideoURL] = useState(null); // Video URL from QR code
   const webcamRef = useRef(null);
-  const canvasRef = useRef(null);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(scanQRCode, 100); // Scan every 100ms
-    return () => clearInterval(interval); // Clear interval on component unmount
-  }, []);
-
-  const scanQRCode = () => {
-    if (
-      webcamRef.current &&
-      webcamRef.current.video.readyState === 4 // Ensure the video is ready
-    ) {
+  // Function to handle QR Code scanning
+  const handleQRScan = () => {
+    if (webcamRef.current) {
       const video = webcamRef.current.video;
-      const canvas = canvasRef.current;
-      const context = canvas.getContext("2d");
-
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-
-      // Draw the video frame to the canvas
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-      const code = jsQR(imageData.data, canvas.width, canvas.height);
-
-      if (code) {
-        console.log("QR Code detected:", code.data);
-        setIsVideoPlaying(true);
+  
+      // Check if the video dimensions are ready
+      if (video.readyState === 4 && video.videoWidth > 0 && video.videoHeight > 0) {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+  
+        // Set canvas dimensions to match the video feed
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+  
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, canvas.width, canvas.height);
+  
+        if (code) {
+          console.log("QR Code Data:", code.data);
+          setVideoURL(code.data); // Set the video URL from the QR code
+        }
       }
     }
   };
+  
+
+  useEffect(() => {
+    const interval = setInterval(handleQRScan, 500);
+    return () => clearInterval(interval);
+  }, []);
+  
 
   return (
     <div
       style={{
-        backgroundColor: "#fff100", // Yellow background
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
         position: "relative",
+        width: "100%",
+        height: "100vh",
+        backgroundImage: "url('https://heidicohen.com/wp-content/uploads/QR-Code-Newspaper.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
-      {isVideoPlaying ? (
-        <iframe
-          src="https://www.youtube.com/embed/M2khW5YZdH8?autoplay=1"
-          title="YouTube Video"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
+      {!videoURL ? (
+        <Webcam
+          ref={webcamRef}
           style={{
-            width: "300px",
-            height: "300px",
-            borderRadius: "15px",
+            position: "absolute",
+            top: "65%", // Position webcam feed over QR code
+            right: "6%",
+            width: "15%",
+            height: "28%",
+            border: "2px solid #fff",
+            borderRadius: "10px",
           }}
-        ></iframe>
+        />
       ) : (
-        <>
-          <Webcam
-            ref={webcamRef}
-            style={{
-              position: "absolute",
-              width: "300px",
-              height: "300px",
-              borderRadius: "15px",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-            }}
-          />
-          <canvas
-            ref={canvasRef}
-            style={{
-              display: "none",
-            }}
-          ></canvas>
-          <div
-            style={{
-              position: "absolute",
-              bottom: "-50px",
-              textAlign: "center",
-              color: "#000",
-              fontWeight: "bold",
-              fontSize: "18px",
-            }}
-          >
-            Point the camera at a QR Code
-          </div>
-        </>
+        <iframe
+          src={videoURL}
+          title="QR Video"
+          style={{
+            position: "absolute",
+            top: "15%", // Match webcam feed position
+            right: "10%",
+            width: "15%",
+            height: "15%",
+            border: "none",
+          }}
+          allow="autoplay"
+        />
       )}
     </div>
   );
 };
 
-export default QRScannerWithVideo;
+export default QRScanner;
