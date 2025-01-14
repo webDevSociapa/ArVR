@@ -130,6 +130,7 @@ const QRScanner = () => {
               height: "28%",
               border: "2px solid #fff",
               borderRadius: "10px",
+              padding:"10px 0px"
           }}
         />
       )}
