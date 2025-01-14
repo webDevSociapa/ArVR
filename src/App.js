@@ -104,10 +104,10 @@ const QRScanner = () => {
           title="QR Video"
           style={{
             position: "absolute",
-            top: "15%", // Match webcam feed position
-            right: "10%",
+            top: "65%", // Position webcam feed over QR code
+            right: "6%",
             width: "15%",
-            height: "15%",
+            height: "28%",
             border: "none",
           }}
           allow="autoplay"
