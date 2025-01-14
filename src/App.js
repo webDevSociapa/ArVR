@@ -62,6 +62,7 @@ const QRScanner = () => {
         backgroundImage: "url('https://heidicohen.com/wp-content/uploads/QR-Code-Newspaper.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
+        filter: "blur(5px)", // Apply blur effect to the background
       }}
     >
       {!videoURL ? (
@@ -99,25 +100,26 @@ const QRScanner = () => {
           </button>
         </>
       ) : (
-        <iframe
-          src={`https://www.youtube.com/embed/${videoURL}?autoplay=1`}
-          title="QR Video"
+        <video
+          src={videoURL}
+          autoPlay
+          muted
           style={{
             position: "absolute",
-            top: "65%", // Position webcam feed over QR code
+            top: "65%", // Position video feed over QR code
             right: "6%",
             width: "15%",
             height: "28%",
             border: "none",
           }}
-          allow="autoplay"
         />
       )}
       
       {qrPosition && (
-        <iframe
-          src={`https://www.youtube.com/embed/${videoURL}?autoplay=1`}
-          title="QR Video"
+        <video
+          src={videoURL}
+          autoPlay
+          muted
           style={{
             position: "absolute",
             top: `${qrPosition.top}%`,
@@ -126,7 +128,6 @@ const QRScanner = () => {
             height: `${qrPosition.height}%`,
             border: "none",
           }}
-          allow="autoplay"
         />
       )}
     </div>
