@@ -3,7 +3,7 @@ import Webcam from "react-webcam";
 import jsQR from "jsqr";
 
 const QRScanner = () => {
-  const [videoURL, setVideoURL] = useState("M2khW5YZdH8?si=RsqavLx3cOWynk9x"); // Video URL from QR code
+  const [videoURL, setVideoURL] = useState(""); // Video URL from QR code
   const [isFrontCamera, setIsFrontCamera] = useState(true); // State to toggle between front and back camera
   const [qrPosition, setQrPosition] = useState(null); // Store QR position
   const webcamRef = useRef(null);
