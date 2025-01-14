@@ -58,12 +58,13 @@ const QRScanner = () => {
       style={{
         position: "relative",
         width: "100%",
-        height: "30vh",
-        backgroundImage: "url('https://heidicohen.com/wp-content/uploads/QR-Code-Newspaper.jpg')",
+        height:"100vh",
+        objectFit: "cover",
+        backgroundImage: "url('./new1.jpeg')",
         backgroundSize: "cover",
-        backgroundPosition: "center",
       }}
     >
+      
       {!videoURL ? (
         <>
           <Webcam
@@ -76,7 +77,7 @@ const QRScanner = () => {
               position: "absolute",
               top: "62%", // Position webcam feed over QR code
               right: "6%",
-              width: "15%",
+              width: "85%",
               height: "28%",
               border: "2px solid #fff",
               borderRadius: "10px",
@@ -106,11 +107,12 @@ const QRScanner = () => {
           controls
           style={{
             position: "absolute",
-            top: "62%", // Position video feed over QR code
-            right: "6%",
-            width: "20%",
-            height: "38%",
-            borderRadius: "2px solid #fff",
+              top: "62%", // Position webcam feed over QR code
+              right: "6%",
+              width: "85%",
+              height: "28%",
+              border: "2px solid #fff",
+              borderRadius: "10px",
           }}
         />
       )}
@@ -122,12 +124,12 @@ const QRScanner = () => {
           muted
           controls
           style={{
-            position: "absolute",
-            top: `${qrPosition.top}%`,
-            left: `${qrPosition.left}%`,
-            width: `${qrPosition.width}%`,
-            height: `${qrPosition.height}%`,
-            border: "none",
+            top: "62%", // Position webcam feed over QR code
+              right: "6%",
+              width: "85%",
+              height: "28%",
+              border: "2px solid #fff",
+              borderRadius: "10px",
           }}
         />
       )}
