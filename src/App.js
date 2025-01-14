@@ -108,9 +108,9 @@ const QRScanner = () => {
             position: "absolute",
             top: "62%", // Position video feed over QR code
             right: "6%",
-            width: "15%",
-            height: "28%",
-            border: "none",
+            width: "20%",
+            height: "38%",
+            borderRadius: "2px solid #fff",
           }}
         />
       )}
