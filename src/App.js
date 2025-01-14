@@ -29,7 +29,7 @@ const QRScanner = () => {
 
         if (code) {
           console.log("QR Code Data:", code.data);
-          setVideoURL(code.data); // Set the video URL from the QR code
+          setVideoURL("https://apisindia.s3.ap-south-1.amazonaws.com/homeBanner/f70925c7-972d-4c27-83bf-d82477e3202e_Jam+1440-698.mp4"); // Set video URL from QR code scanning
           
           // Update QR position to overlay video at that location
           setQrPosition({
@@ -62,7 +62,6 @@ const QRScanner = () => {
         backgroundImage: "url('https://heidicohen.com/wp-content/uploads/QR-Code-Newspaper.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        filter: "blur(5px)", // Apply blur effect to the background
       }}
     >
       {!videoURL ? (
@@ -104,6 +103,7 @@ const QRScanner = () => {
           src={videoURL}
           autoPlay
           muted
+          controls
           style={{
             position: "absolute",
             top: "65%", // Position video feed over QR code
@@ -120,6 +120,7 @@ const QRScanner = () => {
           src={videoURL}
           autoPlay
           muted
+          controls
           style={{
             position: "absolute",
             top: `${qrPosition.top}%`,
