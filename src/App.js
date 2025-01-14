@@ -58,7 +58,7 @@ const QRScanner = () => {
       style={{
         position: "relative",
         width: "100%",
-        height: "100vh",
+        height: "30vh",
         backgroundImage: "url('https://heidicohen.com/wp-content/uploads/QR-Code-Newspaper.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -68,6 +68,7 @@ const QRScanner = () => {
         <>
           <Webcam
             ref={webcamRef}
+            screenshotFormat
             videoConstraints={{
               facingMode: isFrontCamera ? "user" : "environment", // Switch between front and back cameras
             }}
