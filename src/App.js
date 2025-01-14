@@ -74,7 +74,7 @@ const QRScanner = () => {
             }}
             style={{
               position: "absolute",
-              top: "65%", // Position webcam feed over QR code
+              top: "62%", // Position webcam feed over QR code
               right: "6%",
               width: "15%",
               height: "28%",
@@ -106,7 +106,7 @@ const QRScanner = () => {
           controls
           style={{
             position: "absolute",
-            top: "65%", // Position video feed over QR code
+            top: "62%", // Position video feed over QR code
             right: "6%",
             width: "15%",
             height: "28%",
