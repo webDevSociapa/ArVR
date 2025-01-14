@@ -7,6 +7,7 @@ const QRScanner = () => {
   const [isFrontCamera, setIsFrontCamera] = useState(true); // State to toggle between front and back camera
   const [qrPosition, setQrPosition] = useState(null); // Store QR position
   const webcamRef = useRef(null);
+  const [qrDetected, setQrDetected] = useState(false); // Track if QR code is detected
 
   // Function to handle QR Code scanning
   const handleQRScan = () => {
@@ -29,6 +30,7 @@ const QRScanner = () => {
 
         if (code) {
           console.log("QR Code Data:", code.data);
+          setQrDetected(true);
           setVideoURL("https://apisindia.s3.ap-south-1.amazonaws.com/homeBanner/f70925c7-972d-4c27-83bf-d82477e3202e_Jam+1440-698.mp4"); // Set video URL from QR code scanning
           
           // Update QR position to overlay video at that location
@@ -60,7 +62,7 @@ const QRScanner = () => {
         width: "100%",
         height:"100vh",
         objectFit: "cover",
-        backgroundImage: "url('./new1.jpeg')",
+        backgroundImage: qrDetected ? "url('./new1.jpeg')" : "none",
         backgroundSize: "cover",
       }}
     >
