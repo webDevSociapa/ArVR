@@ -6,7 +6,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { grey } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Skeleton from "@mui/material/Skeleton";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 
 const drawerBleeding = 56;
@@ -85,12 +84,12 @@ function SwipeableEdgeDrawer({ onPlayWithSociapa, window }) {
           <Puller />
         </StyledBox>
         <StyledBox sx={{ px: 2, pb: 2, height: "100%", overflow: "auto" }}>
-          <Skeleton variant="rectangular" height="100%" />
+          {/* <Skeleton variant="rectangular" height="100%" /> */}
         </StyledBox>
       </SwipeableDrawer>
     </Root>
   );
-  
+
 }
 
 SwipeableEdgeDrawer.propTypes = {
