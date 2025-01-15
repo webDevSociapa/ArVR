@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from "react";
-import Webcam from "react-webcam";
 import jsQR from "jsqr";
 import SwipeableEdgeDrawer from "./components/drawer";
 
