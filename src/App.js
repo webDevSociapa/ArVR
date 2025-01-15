@@ -1,13 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
 import jsQR from "jsqr";
-import SwipeableEdgeDrawer from "./components/drawer";
+import './index.css'; // Import the custom drawer styles
 
 const QRScanner = () => {
   const [videoURL, setVideoURL] = useState("");
   const [isFrontCamera, setIsFrontCamera] = useState(true);
   const [qrPosition, setQrPosition] = useState(null);
   const [qrDetected, setQrDetected] = useState(false);
-  const [showHello, setShowHello] = useState(false); // State to toggle drawer and "Hello"
+  const [showDrawer, setShowDrawer] = useState(false); // State to control drawer visibility
 
   const webcamRef = useRef(null);
 
@@ -49,32 +49,49 @@ const QRScanner = () => {
   const toggleCamera = () => setIsFrontCamera((prev) => !prev);
 
   // Handle drawer button click
-  const handlePlayWithSociapa = () => setShowHello(true);
+  const handlePlayWithSociapa = () => setShowDrawer(true);
+
+  // Close the drawer
+  const closeDrawer = () => setShowDrawer(false);
 
   return (
     <>
-      {!showHello ? (
-        <SwipeableEdgeDrawer onPlayWithSociapa={handlePlayWithSociapa} />
+      {!showDrawer ? (
+        <button
+          style={{
+            position: "absolute",
+            top: "70%",
+            left: "50%",
+            background: "green",
+            transform: "translate(-50%, -50%)",
+            padding: "20px",
+            fontSize: "20px",
+            cursor: "pointer",
+            zIndex: 1
+          }}
+          onClick={handlePlayWithSociapa}
+        >
+          Play with Sociapa
+        </button>
       ) : (
         <div
-        style={{
-          position: "relative",
-          width: "100%",
-          height: "100vh",
-          objectFit: "cover",
-          backgroundImage: qrDetected ? "url('./neww.jpg')" : "none",
-          backgroundSize: "cover",
-        }}
-      >
-{/*   
-        {!videoURL ? (
-          <>
-            <Webcam
-              ref={webcamRef}
-              screenshotFormat
-              videoConstraints={{
-                facingMode: isFrontCamera ? "user" : "environment", // Switch between front and back cameras
-              }}
+          style={{
+            position: "relative",
+            width: "100%",
+            height: "100vh",
+            objectFit: "cover",
+            backgroundImage: qrDetected ? "url('./neww.jpg')" : "none",
+            backgroundSize: "cover",
+            overflow: "hidden"
+          }}
+        >
+          {/* Video element */}
+          {qrPosition && (
+            <video
+              src={videoURL}
+              autoPlay
+              muted
+              controls
               style={{
                 position: "absolute",
                 top: "62%", // Position webcam feed over QR code
@@ -85,58 +102,19 @@ const QRScanner = () => {
                 borderRadius: "10px",
               }}
             />
-            <button
-              onClick={toggleCamera}
-              style={{
-                position: "absolute",
-                top: "5%",
-                left: "5%",
-                backgroundColor: "rgba(0, 0, 0, 0.5)",
-                color: "white",
-                border: "none",
-                padding: "10px",
-                cursor: "pointer",
-              }}
-            >
-              Switch Camera
-            </button>
-          </>
-        ) : (
-          <video
-            src={videoURL}
-            autoPlay
-            muted
-            controls
-            style={{
-              position: "absolute",
-              top: "62%", // Position webcam feed over QR code
-              right: "6%",
-              width: "85%",
-              height: "28%",
-              border: "2px solid #fff",
-              borderRadius: "10px",
-            }}
-          />
-        )} */}
-  
-        {qrPosition && (
-          <video
-            src={videoURL}
-            autoPlay
-            muted
-            controls
-            style={{
-              top: "62%", // Position webcam feed over QR code
-              right: "6%",
-              width: "85%",
-              height: "28%",
-              border: "2px solid #fff",
-              borderRadius: "10px",
-              padding: "10px 0px"
-            }}
-          />
-        )}
-      </div>
+          )}
+
+          {/* Custom Bottom Drawer */}
+          <div className={`custom-drawer ${showDrawer ? "open" : ""}`}>
+            <div className="custom-drawer-content">
+              <button className="close-drawer" onClick={closeDrawer}>
+                X
+              </button>
+              <h2>Welcome to Sociapa!</h2>
+              <p>Enjoy your experience with Sociapa.</p>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
