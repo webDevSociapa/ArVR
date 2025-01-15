@@ -38,6 +38,7 @@ function SwipeableEdgeDrawer({ onPlayWithSociapa, window }) {
   };
 
   const container = window !== undefined ? () => window().document.body : undefined;
+  
 
   return (
     <Root>
